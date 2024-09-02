@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI&ML Tutor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            height: 80vh;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-box::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .chat-box::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 10px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            max-width: 75%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            line-height: 1.4;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: #ffffff;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        .bot-message {
+            background-color: #e9e9eb;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+
+        .input-container {
+            display: flex;
+            padding: 15px;
+            background-color: #f0f0f1;
+            border-top: 1px solid #ddd;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox">
+            <!-- 聊天内容将被动态插入这里 -->
+        </div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Please type your question" onkeypress="handleKeyPress(event)">
+            <select id="methodSelect">
+                <option value="global">GLOBAL</option>
+                <option value="local">LOCAL</option>
+            </select>
+            <button onclick="submitQuestion()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                submitQuestion();
+            }
+        }
+
+        function submitQuestion() {
+            const userInput = document.getElementById('userInput').value;
+            const selectedMethod = document.getElementById('methodSelect').value; // 获取用户选择的方法
+            if (userInput.trim() === '') return;
+
+            // 显示用户的消息
+            addMessage(userInput, 'user-message');
+            document.getElementById('userInput').value = '';
+
+            // 模拟发送请求到服务器
+            fetch('http://localhost:3001/run-query', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: userInput, method: selectedMethod})
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 显示服务器返回的消息
+                addMessage(data.answer, 'bot-message');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                addMessage('Sorry, there are some mistakes.', 'bot-message');
+            });
+        }
+
+        function addMessage(text, className) {
+            const chatBox = document.getElementById('chatBox');
+            const message = document.createElement('div');
+            message.className = `message ${className}`;
+            message.innerText = text;
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
