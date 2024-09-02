@@ -16,8 +16,11 @@ You need to install the GraphRAG library on your work environment.
 
 The program will check the enviroment automatically. If there is no python and graphrag library, it will install them.
 
-
-
+Set the API
+--------
+Find the file way project/graphrag/ragtest/.env
+```
+```
 Use the Chatbot
 --------
 >
