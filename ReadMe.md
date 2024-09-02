@@ -1,4 +1,4 @@
-GraphRAG chatbot on Artificial Intelligence and Machine Learning**
+GraphRAG chatbot on Artificial Intelligence and Machine Learning
 =======
 Introduction
 -----------
@@ -26,14 +26,18 @@ GRAPHRAG_LLM_MODEL=gpt-4o   #you can adjust the model
 ```
 Use the Chatbot
 --------
->Run the node in terminal
+Run the node in terminal
 ```
 cd website
 node server
 ```
 Once you have seen the message:
-Server is running at the port: XXXXX. 
+>Server is running at the port: XXXXX. 
 You can move on.
 
->Open the website
-You can open the 
+Open the html file
+>public/request website.html
+
+Type what you want to ask on the chatbox. Wait several seconds.
+>Global research mode: better performance in comparison, summurization, conclusion
+>Local research mode: better performance in understanding single concepts
