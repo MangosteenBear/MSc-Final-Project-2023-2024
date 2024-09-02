@@ -13,6 +13,7 @@ Environment
 ------
 You need to have Python 3.10-3.12 installed on your work environment.
 You need to install the GraphRAG library on your work environment.
+You need to install the node.js on your work environment.
 
 The program will check the enviroment automatically. If there is no python and graphrag library, it will install them.
 
@@ -20,7 +21,19 @@ Set the API
 --------
 Find the file way project/graphrag/ragtest/.env
 ```
+GRAPHRAG_API_KEY=           #add your own OpenAI API here
+GRAPHRAG_LLM_MODEL=gpt-4o   #you can adjust the model
 ```
 Use the Chatbot
 --------
->
+>Run the node in terminal
+```
+cd website
+node server
+```
+Once you have seen the message:
+Server is running at the port: XXXXX. 
+You can move on.
+
+>Open the website
+You can open the 
